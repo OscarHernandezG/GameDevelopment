@@ -2,6 +2,7 @@
 #define __J1PLAYER_H__
 
 #include "j1Module.h"
+#include "Animation.h"
 
 struct SDL_Texture;
 struct SDL_Rect;
@@ -43,6 +44,7 @@ private:
 	p2Point<float> movement = { 0,0 };
 	float a = 0.002;
 	bool jump = true;
+	Animation idle;
 };
 
 

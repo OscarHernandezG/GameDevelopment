@@ -93,6 +93,9 @@
     <ClInclude Include="J1Player.h">
       <Filter>Desenvolupament  ========\Player</Filter>
     </ClInclude>
+    <ClInclude Include="Animation.h">
+      <Filter>Desenvolupament  ========\Tools</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Programacio 2 ===========">

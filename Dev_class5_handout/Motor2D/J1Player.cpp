@@ -34,10 +34,21 @@ bool j1Player::Start()
 {
 	//Load player texture
 
-	texture = App->tex->Load("textures/test.png");
+	texture = App->tex->Load("textures/idle (1).png");
+	if (texture != nullptr) {
+		LOG("OK");
+	}
 
-	this->rect.h = 50;
-	this->rect.w = 50;
+	//this->rect.h = 50;
+	//this->rect.w = 50;
+
+	idle.PushBack({ 0,0,283,278 });
+	idle.PushBack({ 283,0,283,278 });
+	idle.PushBack({ 0,278,283,278 });
+	idle.PushBack({ 283,278,283,278 });
+	idle.loop = true;
+	idle.speed = 0.05f;
+
 	this->rect.x = 0;
 	this->rect.y = 0;
 
@@ -105,7 +116,7 @@ bool j1Player::Update(float dt)
 	movement.y = 0;
 	speed.x = 0;
 
-	App->render->Blit(texture, x, y, &rect,-0.75,angle);
+	App->render->Blit(texture, x, y, &idle.GetCurrentFrame(),-0.75,angle);
 	
 
 

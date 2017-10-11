@@ -48,8 +48,8 @@ void j1Map::Draw()
 					h++;
 				}
 
-				x = (w-h) * blit_tilesets->data->tile_width/3;
-				y = (h+w) * blit_tilesets->data->tile_height/3;
+				x = w * blit_tilesets->data->tile_width;
+				y = h * blit_tilesets->data->tile_height;
 			}
 		}
 	} 
