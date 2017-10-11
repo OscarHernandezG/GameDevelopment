@@ -104,6 +104,8 @@ public:
 	// TODO 8: Create a method that translates x,y coordinates from map positions to world positions
 	iPoint MapToWorld(int x, int y) const;
 
+	iPoint GetPosition(TileSet* tile, int x, int y);
+
 private:
 
 	bool LoadMap();

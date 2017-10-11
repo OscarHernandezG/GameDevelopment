@@ -4,6 +4,7 @@
 #include "j1Render.h"
 #include "j1Textures.h"
 #include "j1Map.h"
+#include "j1Input.h"
 #include <math.h>
 
 j1Map::j1Map() : j1Module(), map_loaded(false)
@@ -47,8 +48,8 @@ void j1Map::Draw()
 					h++;
 				}
 
-				x = w * blit_tilesets->data->tile_width;
-				y = h * blit_tilesets->data->tile_height;
+				x = (w-h) * blit_tilesets->data->tile_width/3;
+				y = (h+w) * blit_tilesets->data->tile_height/3;
 			}
 		}
 	} 
@@ -360,3 +361,14 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 	return ret;
 }
 
+iPoint j1Map::GetPosition(TileSet* tile, int x, int y) {
+
+	iPoint pos;
+
+	pos.x = x / tile->tile_width;
+	pos.y = y / tile->tile_width;
+
+	
+
+	return pos;
+}
