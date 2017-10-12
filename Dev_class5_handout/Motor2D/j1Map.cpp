@@ -36,8 +36,10 @@ void j1Map::Draw()
 
 	SDL_Rect* rect;
 	int x, y, h, w;
+	int layerss = 0;
 	for (p2List_item<TileSet*>* blit_tilesets = data.tilesets.start; blit_tilesets != nullptr; blit_tilesets = blit_tilesets->next) {
 		for (p2List_item<MapLayer*>* layer = this->data.layers.start; layer != nullptr; layer = layer->next) {
+			layerss++;
 			x = y = h = w = 0;
 			for (int id = 0; id < layer->data->size_data; id++) {
 				rect = &blit_tilesets->data->GetTileRect(layer->data->data[id]);
@@ -53,6 +55,7 @@ void j1Map::Draw()
 			}
 		}
 	} 
+
 		// TODO 9: Complete the draw function
 
 }
@@ -164,6 +167,7 @@ bool j1Map::Load(const char* file_name)
 		if (ret == true) {
 
 			ret = LoadLayer(layers, layer);
+	
 		}
 		data.layers.add(layer);
 	}
@@ -338,7 +342,7 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 	layer->name = node.attribute("name").as_string();
 	layer->width = node.attribute("width").as_int();
 	layer->height = node.attribute("height").as_int();
-
+	layer->height = node.child("properties").child("property").attribute("value").as_int();
 	for (pugi::xml_node iterator = node.child("data").child("tile"); iterator != nullptr; iterator = iterator.next_sibling())
 	{
 		layer->size_data++;
@@ -371,4 +375,40 @@ iPoint j1Map::GetPosition(TileSet* tile, int x, int y) {
 	
 
 	return pos;
+}
+
+int j1Map::MapPosition(TileSet* tile, int x, int y) {
+
+	iPoint pos = GetPosition(tile, x, y);
+	int ret = (pos.y * tile->num_tiles_width) + pos.x;
+
+	return ret;
+}
+
+
+ColisionType j1Map::CheckColision(int gid) {
+
+	ColisionType ret = NONE;
+	int aux;
+	
+	for (p2List_item<MapLayer*>* layer = this->data.layers.start; layer != nullptr; layer = layer->next) {
+
+		aux = layer->data->data[gid];
+		
+		if (aux != 0) {
+
+			switch (layer->data->property) {
+
+			case 1:
+				ret = GROUND;
+				break;
+			case 2:
+				ret = DEATH;
+				break;
+
+			}
+		}
+	}
+
+	return ret;
 }

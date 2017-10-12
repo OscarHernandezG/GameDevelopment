@@ -40,26 +40,26 @@ bool j1Player::Start()
 	}
 
 	// Idle Animation
-//	idle.PushBack({ ,,, });
-	idle.loop = true;
-	idle.speed = 0.1f;
+	//Idle.PushBack({ ,,, });
+	Idle.loop = true;
+	Idle.speed = 0.1f;
 
 	// Jump Animation
-////	jump.PushBack({ ,,, });
-//	jump.loop = false;
-//	jump.speed = 0.1f;
+	//Jump.PushBack({ ,,, });
+	Jump.loop = false;
+	Jump.speed = 0.1f;
 
 	// Run Animation
-	run.PushBack({ 0,0,150,150 });
-	run.loop = true;
-	run.speed = 0.1f;
+	Run.PushBack({ 0,0,75,125 });
+	Run.loop = true;
+	Run.speed = 0.1f;
 
 	// Slide Animation
-//	slide.PushBack({ ,,, });
-	slide.loop = false;
-	slide.speed = 0.1f;
+//	Slide.PushBack({ ,,, });
+	Slide.loop = false;
+	Slide.speed = 0.1f;
 
-	CurrentAnim = &run;
+	CurrentAnim = &Run;
 
 	speed.x = 0;
 	speed.y = 0;
@@ -82,55 +82,133 @@ bool j1Player::PreUpdate()
 bool j1Player::Update(float dt)
 {
 
-	
 
-	//if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
-	//	this->y -= 1;
 
-	//if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
-	//	this->y += 1;
+
 
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
-		this->speed.x = -1;
-		flip = SDL_FLIP_HORIZONTAL;
+
+		int pos = App->map->MapPosition(App->map->data.tilesets.start->data, x, y);
+
+		ColisionType colision1 = App->map->CheckColision(pos - 1);
+		ColisionType colision2 = App->map->CheckColision(pos - 1 + App->map->data.tilesets.start->data->num_tiles_width);
+
+		if (colision1 == NONE && colision2 == NONE) {
+			PlayerState = RUNNING_LEFT;
+		}
+		else if (colision1 == GROUND || colision2 == GROUND) {
+			if (colision1 != DEAD && colision2 != DEAD) {
+				PlayerState = IDLE;
+			}
+			else
+				PlayerState = DEAD;
+		}
 	}
+
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-		this->speed.x = 1;
-		flip = SDL_FLIP_NONE;
+		int pos = App->map->MapPosition(App->map->data.tilesets.start->data, x, y);
+
+		ColisionType colision1 = App->map->CheckColision(pos + 1);
+		ColisionType colision2 = App->map->CheckColision(pos + 1 + App->map->data.tilesets.start->data->num_tiles_width);
+
+		if (colision1 == NONE && colision2 == NONE) {
+			PlayerState = RUNNING_RIGHT;
+		}
+		else if (colision1 == GROUND || colision2 == GROUND) {
+			if (colision1 != DEAD && colision2 != DEAD) {
+				PlayerState = IDLE;
+			}
+			else
+				PlayerState = DEAD;
+		}
 	}
-	if (App->input->GetKey(SDL_SCANCODE_E) == KEY_REPEAT)
-		this->angle += 0.5;
 
-	if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT)
-		this->angle -= 0.5;
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
+
+		int pos = App->map->MapPosition(App->map->data.tilesets.start->data, x, y);
+
+		ColisionType colision = App->map->CheckColision(pos - App->map->data.tilesets.start->data->num_tiles_width);
+
+		if (colision == NONE) {
+			if (PlayerState == RUNNING_LEFT) {
+				PlayerState = JUMPING_LEFT;
+			}
+			else {
+				PlayerState = JUMPING_RIGHT;
+			}
+		}
+		else if (colision == GROUND) {
+			PlayerState = IDLE;
+		}
+		else
+			PlayerState = DEAD;
+
+	}
+
+	// "Gravity"
+
+	if (PlayerState != DEAD) {
+
+		int pos = App->map->MapPosition(App->map->data.tilesets.start->data, x, y);
 
 
-	if (y < 426)
-		speed.y += a;
+		ColisionType colision = App->map->CheckColision(pos+(2*App->map->data.tilesets.start->data->num_tiles_width));
 
-	else
-		speed.y = 0;
+		if (colision == NONE) {
+			y+=2;
+			LOG("y++");
+		}
+		else if (colision == GROUND) {	
+			LOG("gound");
+		}
+		else
+			PlayerState = DEAD;
+	}
+
+	if (jump) {
+
+		speed.y++;
+		if (speed.y == 0)
+			jump = false;
+
+		y += speed.y;
+
+	}
 
 
-
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
-		this->speed.y = -0.5;
-
-
-	movement.x = speed.x;
-	movement.y = speed.y;
-	
-	x += movement.x;
-	y += movement.y;
-
-	movement.x = 0;
-	movement.y = 0;
-	speed.x = 0;
+	switch (PlayerState)
+	{
+	case IDLE:
+		CurrentAnim = &Run;
+		LOG("IDLE");
+		break;
+	case RUNNING_RIGHT:
+		CurrentAnim = &Run;
+		x+=2;
+		flip = SDL_FLIP_NONE;
+		break;
+	case RUNNING_LEFT:
+		CurrentAnim = &Run;
+		x-=2;
+		flip = SDL_FLIP_HORIZONTAL;
+		break;
+	case JUMPING_RIGHT:
+		CurrentAnim = &Run;
+		flip = SDL_FLIP_NONE;
+		speed.y = -25;
+		jump = true;
+		break;
+	case JUMPING_LEFT:
+		break;
+	case DEAD:
+		LOG("DEAD");
+		break;
+	default:
+		break;
+	}
 
 	App->render->Blit(texture, x, y, &CurrentAnim->GetCurrentFrame(),1, flip);
-	
-
-
+	PlayerState = IDLE;
 	return true;
 }
 

@@ -757,7 +757,10 @@
    <tile gid="0"/>
   </data>
  </layer>
- <layer name="Capa de patrones 4" width="30" height="8" opacity="0.61">
+ <layer name="Capa de patrones 4" width="30" height="8">
+  <properties>
+   <property name="1" type="int" value="1"/>
+  </properties>
   <data>
    <tile gid="0"/>
    <tile gid="0"/>

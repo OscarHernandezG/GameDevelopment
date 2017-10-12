@@ -14,6 +14,7 @@ struct MapLayer {
 	int width, height;
 	unsigned int* data;
 	uint size_data = 0;
+	int property;
 
 	~MapLayer() {
 		RELEASE(data);
@@ -64,6 +65,13 @@ enum MapTypes
 	MAPTYPE_ISOMETRIC,
 	MAPTYPE_STAGGERED
 };
+
+enum ColisionType
+{
+	NONE = 0,
+	GROUND,
+	DEATH
+};
 // ----------------------------------------------------
 struct MapData
 {
@@ -105,6 +113,10 @@ public:
 	iPoint MapToWorld(int x, int y) const;
 
 	iPoint GetPosition(TileSet* tile, int x, int y);
+
+	int MapPosition(TileSet* tile, int x, int y);
+
+	ColisionType CheckColision(int gid);
 
 private:
 

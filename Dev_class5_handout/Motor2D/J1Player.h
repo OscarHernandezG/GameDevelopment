@@ -7,6 +7,18 @@
 struct SDL_Texture;
 struct SDL_Rect;
 
+enum State {
+	IDLE = 0,
+	RUNNING_RIGHT,
+	RUNNING_LEFT,
+	JUMPING_RIGHT,
+	JUMPING_LEFT,
+	
+	DEAD
+
+};
+
+
 class j1Player : public j1Module
 {
 public:
@@ -43,11 +55,16 @@ private:
 	p2Point<float> speed;
 	p2Point<float> movement = { 0,0 };
 	float a = 0.002;
-	bool jump = true;
-	Animation idle;
-	//Animation jump;
-	Animation run;
-	Animation slide;
+	bool run_left = false;
+	bool run_right = false;
+	bool jump = false;
+	bool ground = false;
+	State PlayerState = IDLE;
+
+	Animation Idle;
+	Animation Jump;
+	Animation Run;
+	Animation Slide;
 	Animation* CurrentAnim = nullptr;
 	int piv = 0;
 
