@@ -45,6 +45,13 @@ private:
 	float a = 0.002;
 	bool jump = true;
 	Animation idle;
+	//Animation jump;
+	Animation run;
+	Animation slide;
+	Animation* CurrentAnim = nullptr;
+	int piv = 0;
+
+	SDL_RendererFlip flip = SDL_FLIP_NONE;
 };
 
 

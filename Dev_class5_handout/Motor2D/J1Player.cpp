@@ -34,23 +34,32 @@ bool j1Player::Start()
 {
 	//Load player texture
 
-	texture = App->tex->Load("textures/idle (1).png");
+	texture = App->tex->Load("textures/aaaa.png");
 	if (texture != nullptr) {
 		LOG("OK");
 	}
 
-	//this->rect.h = 50;
-	//this->rect.w = 50;
-
-	idle.PushBack({ 0,0,283,278 });
-	idle.PushBack({ 283,0,283,278 });
-	idle.PushBack({ 0,278,283,278 });
-	idle.PushBack({ 283,278,283,278 });
+	// Idle Animation
+//	idle.PushBack({ ,,, });
 	idle.loop = true;
-	idle.speed = 0.05f;
+	idle.speed = 0.1f;
 
-	this->rect.x = 0;
-	this->rect.y = 0;
+	// Jump Animation
+////	jump.PushBack({ ,,, });
+//	jump.loop = false;
+//	jump.speed = 0.1f;
+
+	// Run Animation
+	run.PushBack({ 0,0,150,150 });
+	run.loop = true;
+	run.speed = 0.1f;
+
+	// Slide Animation
+//	slide.PushBack({ ,,, });
+	slide.loop = false;
+	slide.speed = 0.1f;
+
+	CurrentAnim = &run;
 
 	speed.x = 0;
 	speed.y = 0;
@@ -81,12 +90,14 @@ bool j1Player::Update(float dt)
 	//if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
 	//	this->y += 1;
 
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
 		this->speed.x = -1;
-
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+		flip = SDL_FLIP_HORIZONTAL;
+	}
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
 		this->speed.x = 1;
-
+		flip = SDL_FLIP_NONE;
+	}
 	if (App->input->GetKey(SDL_SCANCODE_E) == KEY_REPEAT)
 		this->angle += 0.5;
 
@@ -116,7 +127,7 @@ bool j1Player::Update(float dt)
 	movement.y = 0;
 	speed.x = 0;
 
-	App->render->Blit(texture, x, y, &idle.GetCurrentFrame(),-0.75,angle);
+	App->render->Blit(texture, x, y, &CurrentAnim->GetCurrentFrame(),1, flip);
 	
 
 
