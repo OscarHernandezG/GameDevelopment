@@ -347,7 +347,7 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 	layer->name = node.attribute("name").as_string();
 	layer->width = node.attribute("width").as_int();
 	layer->height = node.attribute("height").as_int();
-	layer->height = node.child("properties").child("property").attribute("value").as_int();
+	layer->property = node.child("properties").child("property").attribute("value").as_int();
 	for (pugi::xml_node iterator = node.child("data").child("tile"); iterator != nullptr; iterator = iterator.next_sibling())
 	{
 		layer->size_data++;
@@ -399,32 +399,32 @@ ColisionType j1Map::CheckColision(int gid) {
 	int aux;
 
 	p2List_item<TileSet*>* blit_tilesets = data.tilesets.start;
-	p2List_item<MapLayer*>* layer = this->data.layers.end;
 
-	//for (p2List_item<MapLayer*>* layer = this->data.layers.start; layer != nullptr; layer = layer->next) {
+//	p2List_item<MapLayer*>* layer = this->data.layers.end;
 
-
+	for (p2List_item<MapLayer*>* layer = this->data.layers.start; layer != nullptr; layer = layer->next) {
+		
 		aux = layer->data->data[gid];
 		SDL_Rect* rect;
 		if (aux != 0) {
-			
+
 			switch (layer->data->property) {
 
 			case 1:
 				ret = GROUND;
-				rect = &blit_tilesets->data->GetTileRect(layer->data->data[gid]);
+			/*	rect = &blit_tilesets->data->GetTileRect(layer->data->data[gid]);
 				App->render->Blit(blit_tilesets->data->texture, App->player->x, App->player->y, rect);
-				LOG("%s", layer->data->name);
+				LOG("%s", layer->data->name);*/
 				break;
 			case 2:
 				ret = DEATH;
-				rect = &blit_tilesets->data->GetTileRect(layer->data->data[gid]);
-				App->render->Blit(blit_tilesets->data->texture, App->player->x, App->player->y, rect);
+				//rect = &blit_tilesets->data->GetTileRect(layer->data->data[gid]);
+				//App->render->Blit(blit_tilesets->data->texture, App->player->x, App->player->y, rect);
 				break;
 
 			}
 		}
-	//}
+	}
 
 	return ret;
 }

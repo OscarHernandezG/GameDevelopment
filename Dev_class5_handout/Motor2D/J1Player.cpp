@@ -50,7 +50,7 @@ bool j1Player::Start()
 	Jump.speed = 0.1f;
 
 	// Run Animation
-	Run.PushBack({ 0,0,64,64 });
+	Run.PushBack({ 0,0,70,124 });
 	Run.loop = true;
 	Run.speed = 0.1f;
 
@@ -150,7 +150,7 @@ bool j1Player::Update(float dt)
 
 	if (PlayerState != DEAD) {
 
-		int pos = App->map->MapPosition(App->map->data.tilesets.start->data, x, y + 65);
+		int pos = App->map->MapPosition(App->map->data.tilesets.start->data, x, y + 118);
 
 		ColisionType colision1 = App->map->CheckColision(pos);
 		ColisionType colision2 = App->map->CheckColision(pos + 1);
