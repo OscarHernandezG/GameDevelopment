@@ -399,8 +399,9 @@ ColisionType j1Map::CheckColision(int gid) {
 	int aux;
 
 	p2List_item<TileSet*>* blit_tilesets = data.tilesets.start;
+	p2List_item<MapLayer*>* layer = this->data.layers.end;
 
-	for (p2List_item<MapLayer*>* layer = this->data.layers.start; layer != nullptr; layer = layer->next) {
+	//for (p2List_item<MapLayer*>* layer = this->data.layers.start; layer != nullptr; layer = layer->next) {
 
 
 		aux = layer->data->data[gid];
@@ -423,7 +424,7 @@ ColisionType j1Map::CheckColision(int gid) {
 
 			}
 		}
-	}
+	//}
 
 	return ret;
 }

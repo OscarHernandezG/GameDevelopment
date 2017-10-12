@@ -14,7 +14,7 @@ struct MapLayer {
 	int width, height;
 	unsigned int* data;
 	uint size_data = 0;
-	int property;
+	int property = 0;
 
 	~MapLayer() {
 		RELEASE(data);
