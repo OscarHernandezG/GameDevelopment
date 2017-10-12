@@ -19,10 +19,16 @@ j1Scene::~j1Scene()
 {}
 
 // Called before render is available
-bool j1Scene::Awake()
+bool j1Scene::Awake(pugi::xml_node& config)
 {
 	LOG("Loading Scene");
 	bool ret = true;
+
+	for (pugi::xml_node map_node = config.child("maps"); map_node != nullptr; map_node = map_node.next_sibling()) {
+
+		Maps.add(map_node.attribute("map").as_string());
+	}
+
 
 	return ret;
 }
@@ -30,7 +36,7 @@ bool j1Scene::Awake()
 // Called before the first frame
 bool j1Scene::Start()
 {
-	App->map->Load("Map1.tmx");
+	App->map->Load(Maps.start->data);
 	return true;
 }
 
@@ -60,6 +66,14 @@ bool j1Scene::Update(float dt)
 
 	if(App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 		App->render->camera.x -= 3;
+
+	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) {
+		
+		App->map->CleanUp();
+		App->map->Load("Map2.tmx");
+
+	}
+		
 
 	//App->render->Blit(img, 0, 0);
 	App->map->Draw();

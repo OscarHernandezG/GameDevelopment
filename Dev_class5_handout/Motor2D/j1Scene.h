@@ -2,8 +2,10 @@
 #define __j1SCENE_H__
 
 #include "j1Module.h"
+#include "p2List.h"
 
 struct SDL_Texture;
+
 
 class j1Scene : public j1Module
 {
@@ -15,7 +17,7 @@ public:
 	virtual ~j1Scene();
 
 	// Called before render is available
-	bool Awake();
+	bool Awake(pugi::xml_node& config);
 
 	// Called before the first frame
 	bool Start();
@@ -31,6 +33,8 @@ public:
 
 	// Called before quitting
 	bool CleanUp();
+
+	p2List<const char*> Maps;
 
 private:
 };
