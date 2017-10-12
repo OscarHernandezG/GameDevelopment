@@ -85,14 +85,15 @@ bool j1Player::Update(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
 
-		int pos = App->map->MapPosition(App->map->data.tilesets.start->data, x, y);
+		pos = App->map->MapPosition(App->map->data.tilesets.start->data, x, y);
 
 		ColisionType colision1 = App->map->CheckColision(pos);
 		ColisionType colision2 = App->map->CheckColision(pos + App->map->data.layers.start->data->width);
+		ColisionType colision3 = App->map->CheckColision(pos + 2 * (App->map->data.layers.start->data->width));
 
-		colision2 = NONE;
 
-		if (colision1 == NONE && colision2 == NONE) {
+
+		if (colision1 == NONE && colision2 == NONE && colision3 == NONE) {
 			PlayerState = RUNNING_LEFT;
 		}
 		else if (colision1 == GROUND || colision2 == GROUND) {
@@ -104,14 +105,15 @@ bool j1Player::Update(float dt)
 		}
 
 	}
-
+	
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-		int pos = App->map->MapPosition(App->map->data.tilesets.start->data, x+64, y);
+		pos = App->map->MapPosition(App->map->data.tilesets.start->data, x+64, y);
 
 		ColisionType colision1 = App->map->CheckColision(pos);
-		ColisionType colision2 = App->map->CheckColision(pos - App->map->data.layers.start->data->width);
-		colision2 = NONE;
-		if (colision1 == NONE && colision2 == NONE) {
+		ColisionType colision2 = App->map->CheckColision(pos + App->map->data.layers.start->data->width);
+		ColisionType colision3 = App->map->CheckColision(pos + 2*(App->map->data.layers.start->data->width));
+
+		if (colision1 == NONE && colision2 == NONE && colision3 == NONE) {
 			PlayerState = RUNNING_RIGHT;
 		}
 		else if (colision1 == GROUND || colision2 == GROUND) {
@@ -126,7 +128,7 @@ bool j1Player::Update(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
 
-		int pos = App->map->MapPosition(App->map->data.tilesets.start->data, x, y);
+		pos = App->map->MapPosition(App->map->data.tilesets.start->data, x, y);
 
 		ColisionType colision = App->map->CheckColision(pos);
 
@@ -146,11 +148,34 @@ bool j1Player::Update(float dt)
 
 	}
 
+
+	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN) {
+		pos = App->map->MapPosition(App->map->data.tilesets.start->data, x , y + 118/2);
+
+		ColisionType colision = App->map->CheckColision(pos + 2);
+
+		if (colision == NONE) {
+			if (PlayerState == RUNNING_LEFT) {
+				PlayerState = SHIFT;
+			}
+			else {
+				PlayerState = SHIFT;
+			}
+		}
+		else if (colision == GROUND) {
+			PlayerState = IDLE;
+		}
+		else
+			PlayerState = DEAD;
+	}
+
 	// "Gravity"
 
 	if (PlayerState != DEAD) {
 
-		int pos = App->map->MapPosition(App->map->data.tilesets.start->data, x, y + 118);
+		pos = App->map->MapPosition(App->map->data.tilesets.start->data, x, y + 118);
+
+
 
 		ColisionType colision1 = App->map->CheckColision(pos);
 		ColisionType colision2 = App->map->CheckColision(pos + 1);
@@ -170,7 +195,11 @@ bool j1Player::Update(float dt)
 	if (jump) {
 
 		speed.y++;
-		if (speed.y == 0)
+		pos = App->map->MapPosition(App->map->data.tilesets.start->data, x, y);
+		ColisionType colision1 = App->map->CheckColision(pos);
+		ColisionType colision2 = App->map->CheckColision(pos + 1);
+		//ColisionType colision3 = App->map->CheckColision(pos + 2 * (App->map->data.layers.start->data->width));
+		if (speed.y == 0 || (colision1 != NONE || colision2 != NONE))
 			jump = false;
 
 		y += speed.y;
@@ -205,6 +234,11 @@ bool j1Player::Update(float dt)
 		flip = SDL_FLIP_HORIZONTAL;
 		speed.y = -20;
 		jump = true;
+		break;
+	case SHIFT:
+		CurrentAnim = &Run;
+		flip = SDL_FLIP_HORIZONTAL;
+		x += 200;
 		break;
 	case DEAD:
 		x = 0;

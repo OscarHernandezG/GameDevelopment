@@ -13,6 +13,7 @@ enum State {
 	RUNNING_LEFT,
 	JUMPING_RIGHT,
 	JUMPING_LEFT,
+	SHIFT,
 	
 	DEAD
 
@@ -66,7 +67,7 @@ private:
 	Animation Run;
 	Animation Slide;
 	Animation* CurrentAnim = nullptr;
-	int piv = 0;
+	uint pos = 0;
 
 	SDL_RendererFlip flip = SDL_FLIP_NONE;
 };
