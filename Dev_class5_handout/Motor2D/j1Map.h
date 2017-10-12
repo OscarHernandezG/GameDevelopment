@@ -129,6 +129,7 @@ private:
 public:
 
 	MapData data;
+	bool col;
 
 private:
 

@@ -39,12 +39,15 @@ void j1Map::Draw()
 	int x, y, h, w;
 	int layerss = 0;
 	for (p2List_item<TileSet*>* blit_tilesets = data.tilesets.start; blit_tilesets != nullptr; blit_tilesets = blit_tilesets->next) {
-		for (p2List_item<MapLayer*>* layer = this->data.layers.start; layer != nullptr; layer = layer->next) {
+		for (p2List_item<MapLayer*>* layer = this->data.layers.start; layer->next != nullptr; layer = layer->next) {
 			layerss++;
 			x = y = h = w = 0;
+
 			for (int id = 0; id < layer->data->size_data; id++) {
 				rect = &blit_tilesets->data->GetTileRect(layer->data->data[id]);
+
 				App->render->Blit(blit_tilesets->data->texture, x, y, rect);
+
 				w++;
 				if (w == layer->data->width) {
 					w = 0;
@@ -56,6 +59,7 @@ void j1Map::Draw()
 			}
 		}
 	} 
+
 
 		// TODO 9: Complete the draw function
 
@@ -393,9 +397,11 @@ ColisionType j1Map::CheckColision(int gid) {
 
 	ColisionType ret = NONE;
 	int aux;
+
 	p2List_item<TileSet*>* blit_tilesets = data.tilesets.start;
 
 	for (p2List_item<MapLayer*>* layer = this->data.layers.start; layer != nullptr; layer = layer->next) {
+
 
 		aux = layer->data->data[gid];
 		SDL_Rect* rect;
