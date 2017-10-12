@@ -12,6 +12,11 @@
   <tile id="4" terrain=",,0,0"/>
   <tile id="5" terrain=",,0,"/>
   <tile id="6" terrain=",0,0,0"/>
+  <tile id="7">
+   <properties>
+    <property name="col" type="int" value="2"/>
+   </properties>
+  </tile>
   <tile id="8" terrain="1,1,1,1"/>
   <tile id="9" terrain="1,1,1,1"/>
   <tile id="10" terrain=",0,,0"/>
@@ -26,7 +31,7 @@
   <tile id="19" terrain="0,,,"/>
   <tile id="23">
    <properties>
-    <property name="col" type="int" value="2"/>
+    <property name="col" type="int" value="1"/>
    </properties>
   </tile>
  </tileset>
@@ -793,7 +798,7 @@
    <tile gid="0"/>
   </data>
  </layer>
- <layer name="Capa de patrones 4" width="30" height="8" opacity="0.52">
+ <layer name="Capa de patrones 4" width="30" height="8" opacity="0.44">
   <properties>
    <property name="col" type="int" value="1"/>
   </properties>
