@@ -82,10 +82,6 @@ bool j1Player::PreUpdate()
 bool j1Player::Update(float dt)
 {
 
-
-
-
-
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
 
 		int pos = App->map->MapPosition(App->map->data.tilesets.start->data, x, y);
