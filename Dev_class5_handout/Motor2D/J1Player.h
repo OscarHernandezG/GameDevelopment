@@ -45,10 +45,10 @@ public:
 
 	// Called before quitting
 	bool CleanUp();
-
+int x, y;
 private:
 
-	int x, y;
+	
 	SDL_Texture* texture = nullptr;
 	SDL_Rect rect;
 	float angle=0;

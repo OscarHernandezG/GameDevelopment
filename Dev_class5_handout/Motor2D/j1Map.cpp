@@ -6,6 +6,7 @@
 #include "j1Map.h"
 #include "j1Input.h"
 #include <math.h>
+#include "J1Player.h"
 
 j1Map::j1Map() : j1Module(), map_loaded(false)
 {
@@ -43,7 +44,7 @@ void j1Map::Draw()
 			x = y = h = w = 0;
 			for (int id = 0; id < layer->data->size_data; id++) {
 				rect = &blit_tilesets->data->GetTileRect(layer->data->data[id]);
-				App->render->Blit(blit_tilesets->data->texture, x, y, rect,0.5);
+				App->render->Blit(blit_tilesets->data->texture, x, y, rect);
 				w++;
 				if (w == layer->data->width) {
 					w = 0;
@@ -379,8 +380,10 @@ iPoint j1Map::GetPosition(TileSet* tile, int x, int y) {
 
 int j1Map::MapPosition(TileSet* tile, int x, int y) {
 
+	p2List_item<MapLayer*>* layer = this->data.layers.start;
+
 	iPoint pos = GetPosition(tile, x, y);
-	int ret = (pos.y * tile->num_tiles_width) + pos.x;
+	int ret = (pos.y * layer->data->width) + pos.x;
 
 	return ret;
 }
@@ -390,20 +393,26 @@ ColisionType j1Map::CheckColision(int gid) {
 
 	ColisionType ret = NONE;
 	int aux;
-	
+	p2List_item<TileSet*>* blit_tilesets = data.tilesets.start;
+
 	for (p2List_item<MapLayer*>* layer = this->data.layers.start; layer != nullptr; layer = layer->next) {
 
 		aux = layer->data->data[gid];
-		
+		SDL_Rect* rect;
 		if (aux != 0) {
-
+			
 			switch (layer->data->property) {
 
 			case 1:
 				ret = GROUND;
+				rect = &blit_tilesets->data->GetTileRect(layer->data->data[gid]);
+				App->render->Blit(blit_tilesets->data->texture, App->player->x, App->player->y, rect);
+				LOG("%s", layer->data->name);
 				break;
 			case 2:
 				ret = DEATH;
+				rect = &blit_tilesets->data->GetTileRect(layer->data->data[gid]);
+				App->render->Blit(blit_tilesets->data->texture, App->player->x, App->player->y, rect);
 				break;
 
 			}
