@@ -34,7 +34,7 @@ bool j1Player::Start()
 {
 	//Load player texture
 
-	texture = App->tex->Load("textures/aaaa.png");
+	texture = App->tex->Load("textures/robot_animation.png");
 	if (texture != nullptr) {
 		LOG("OK");
 	}
