@@ -35,12 +35,13 @@ public:
 	bool CleanUp();
 
 
-	int currmap = 0;
-
-	p2List<const char*> MapsList;
-	p2List_item<const char*>* CurrentMap = nullptr;
+	
 
 private:
+
+	int currmap = 0;
+	p2List<const char*> MapsList;
+	p2List_item<const char*>* CurrentMap = nullptr;
 };
 
 #endif // __j1SCENE_H__

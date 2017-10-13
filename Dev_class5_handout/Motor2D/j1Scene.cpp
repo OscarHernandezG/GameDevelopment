@@ -8,6 +8,7 @@
 #include "j1Window.h"
 #include "j1Map.h"
 #include "j1Scene.h"
+#include "J1Player.h"
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -115,7 +116,17 @@ bool j1Scene::Update(float dt)
 
 		
 
-	//App->render->Blit(img, 0, 0);
+	if (App->player->x - (-App->render->camera.x +(1 *App->render->camera.w / 3)) >= 0) {
+		if (App->render->camera.x - App->render->camera.w > -(App->map->data.width*App->map->data.tile_width))
+			App->render->camera.x -= 2;
+	}
+
+	if (App->player->x - (-App->render->camera.x + (1 * App->render->camera.w / 4)) <= 0) {
+		if (App->render->camera.x < 0)
+			App->render->camera.x += 2;
+	}
+
+
 	App->map->Draw();
 
 	// TODO 7: Set the window title like

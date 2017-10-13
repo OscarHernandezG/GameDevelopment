@@ -203,8 +203,8 @@ bool j1Player::Update(float dt)
 		y += speed.y;
 
 	}
-	LOG("%s", App->scene->MapsList.start->data);
 
+	
 	switch (PlayerState)
 	{
 	case IDLE:
