@@ -34,7 +34,11 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	p2List<const char*> Maps;
+
+	int currmap = 0;
+
+	p2List<const char*> MapsList;
+	p2List_item<const char*>* CurrentMap = nullptr;
 
 private:
 };

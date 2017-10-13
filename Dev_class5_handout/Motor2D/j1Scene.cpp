@@ -24,11 +24,14 @@ bool j1Scene::Awake(pugi::xml_node& config)
 	LOG("Loading Scene");
 	bool ret = true;
 
-	for (pugi::xml_node map_node = config.child("maps"); map_node != nullptr; map_node = map_node.next_sibling()) {
+	for (pugi::xml_node map_node = config.child("maps"); map_node != nullptr; map_node = map_node.next_sibling("maps")) {
 
-		Maps.add(map_node.attribute("map").as_string());
+		const char* aux = map_node.attribute("map").as_string();
+
+		MapsList.add(aux);
 	}
 
+	CurrentMap = MapsList.start;
 
 	return ret;
 }
@@ -36,7 +39,8 @@ bool j1Scene::Awake(pugi::xml_node& config)
 // Called before the first frame
 bool j1Scene::Start()
 {
-	App->map->Load(Maps.start->data);
+	App->map->Load(CurrentMap->data);
+	currmap = 1;
 	return true;
 }
 
@@ -67,12 +71,48 @@ bool j1Scene::Update(float dt)
 	if(App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 		App->render->camera.x -= 3;
 
-	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) {
+	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) {
 		
 		App->map->CleanUp();
-		App->map->Load("Map2.tmx");
+		App->map->Load("Map1.tmx");
 
+		
+
+		//CurrentMap = MapsList.start;
+		//App->map->Load(CurrentMap->data);
+
+		
 	}
+	
+	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN) {
+
+		App->map->CleanUp();
+		switch (currmap)
+		{
+		case 1:
+			App->map->Load("Map1.tmx");
+		case 2:
+			App->map->Load("Map2.tmx");
+		default:
+			break;
+		}
+
+
+		/*
+
+		App->map->Load(CurrentMap->data);		
+
+		*/
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN) {
+		App->SaveGame();
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) {
+		App->LoadGame();
+	}
+
 		
 
 	//App->render->Blit(img, 0, 0);

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="30" height="8" tilewidth="64" tileheight="64" nextobjectid="1">
+<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="30" height="8" tilewidth="64" tileheight="64" nextobjectid="1">
  <tileset firstgid="1" name="MapaTileset" tilewidth="64" tileheight="64" spacing="1" margin="1" tilecount="28" columns="7">
   <image source="MapaTileset.png" width="456" height="261"/>
   <terraintypes>
@@ -25,10 +25,13 @@
   <tile id="18" terrain="0,0,,"/>
   <tile id="19" terrain="0,,,"/>
  </tileset>
- <tileset firstgid="29" name="MapaTileset" tilewidth="64" tileheight="64" spacing="1" margin="1" tilecount="35" columns="7">
-  <image source="MapaTileset.png" width="456" height="326"/>
+ <tileset firstgid="29" name="MapaTileset" tilewidth="64" tileheight="64" spacing="1" margin="1" tilecount="28" columns="7">
+  <image source="MapaTileset.png" width="456" height="261"/>
  </tileset>
- <layer name="Capa de Patrones 1" width="30" height="8">
+ <layer name="Capa de Patrones 1" width="30" height="8" visible="0">
+  <properties>
+   <property name="bg" type="int" value="0"/>
+  </properties>
   <data>
    <tile gid="3"/>
    <tile gid="3"/>
@@ -273,6 +276,9 @@
   </data>
  </layer>
  <layer name="Capa de patrones 3" width="30" height="8">
+  <properties>
+   <property name="death" type="int" value="2"/>
+  </properties>
   <data>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -372,9 +378,6 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="26"/>
-   <tile gid="27"/>
-   <tile gid="28"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -397,7 +400,6 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="21"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -440,7 +442,11 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="4"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -470,9 +476,9 @@
    <tile gid="1"/>
    <tile gid="1"/>
    <tile gid="1"/>
-   <tile gid="11"/>
-   <tile gid="12"/>
-   <tile gid="13"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
    <tile gid="1"/>
    <tile gid="1"/>
    <tile gid="1"/>
@@ -500,9 +506,9 @@
    <tile gid="8"/>
    <tile gid="8"/>
    <tile gid="8"/>
-   <tile gid="11"/>
-   <tile gid="12"/>
-   <tile gid="13"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
    <tile gid="8"/>
    <tile gid="8"/>
    <tile gid="8"/>
@@ -516,7 +522,10 @@
    <tile gid="8"/>
   </data>
  </layer>
- <layer name="Capa de patrones 2" width="30" height="8">
+ <layer name="Capa de patrones 2" width="30" height="8" opacity="0.19">
+  <properties>
+   <property name="ground" type="int" value="1"/>
+  </properties>
   <data>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -616,9 +625,9 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
+   <tile gid="26"/>
+   <tile gid="27"/>
+   <tile gid="28"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -684,7 +693,7 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="0"/>
+   <tile gid="4"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -744,9 +753,9 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
+   <tile gid="11"/>
+   <tile gid="12"/>
+   <tile gid="13"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -760,7 +769,7 @@
    <tile gid="0"/>
   </data>
  </layer>
- <layer name="Capa de patrones 4" width="30" height="8" opacity="0.61">
+ <layer name="Capa de patrones 4" width="30" height="8" visible="0" opacity="0.61">
   <data>
    <tile gid="59"/>
    <tile gid="0"/>

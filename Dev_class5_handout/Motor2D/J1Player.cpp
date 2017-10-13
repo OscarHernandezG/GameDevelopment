@@ -8,6 +8,7 @@
 #include "j1Window.h"
 #include "j1Map.h"
 #include "j1Player.h"
+#include "j1Scene.h"
 
 j1Player::j1Player() : j1Module()
 {
@@ -91,18 +92,16 @@ bool j1Player::Update(float dt)
 		ColisionType colision2 = App->map->CheckColision(pos + App->map->data.layers.start->data->width);
 		ColisionType colision3 = App->map->CheckColision(pos + 2 * (App->map->data.layers.start->data->width));
 
-
+		colision3 = NONE;
 
 		if (colision1 == NONE && colision2 == NONE && colision3 == NONE) {
 			PlayerState = RUNNING_LEFT;
 		}
-		else if (colision1 == GROUND || colision2 == GROUND) {
-			if (colision1 != DEAD && colision2 != DEAD) {
-				PlayerState = IDLE;
-			}
-			else
-				PlayerState = DEAD;
+		else if (colision1 == DEATH && colision2 == DEATH) {
+			PlayerState = DEAD;
 		}
+
+
 
 	}
 	
@@ -113,11 +112,13 @@ bool j1Player::Update(float dt)
 		ColisionType colision2 = App->map->CheckColision(pos + App->map->data.layers.start->data->width);
 		ColisionType colision3 = App->map->CheckColision(pos + 2*(App->map->data.layers.start->data->width));
 
+		colision3 = NONE;
+
 		if (colision1 == NONE && colision2 == NONE && colision3 == NONE) {
 			PlayerState = RUNNING_RIGHT;
 		}
 		else if (colision1 == GROUND || colision2 == GROUND) {
-			if (colision1 != DEAD && colision2 != DEAD) {
+			if (colision1 != DEATH && colision2 != DEATH) {
 				PlayerState = IDLE;
 			}
 			else
@@ -184,11 +185,8 @@ bool j1Player::Update(float dt)
 			y += 2;
 			LOG("y+2");
 		}
-		else if (colision1 == GROUND || colision2 == GROUND) {
-			if (colision1 != DEAD && colision2 != DEAD) {
-			}
-			else
-				PlayerState = DEAD;
+		else if (colision1 == DEATH && colision2 == DEATH) {
+			PlayerState = DEAD;
 		}
 	}
 
@@ -205,7 +203,7 @@ bool j1Player::Update(float dt)
 		y += speed.y;
 
 	}
-
+	LOG("%s", App->scene->MapsList.start->data);
 
 	switch (PlayerState)
 	{
@@ -241,9 +239,8 @@ bool j1Player::Update(float dt)
 		x += 200;
 		break;
 	case DEAD:
-		x = 0;
-		y = 300;
-		LOG("DEAD");
+		x = y = 0;
+		LOG("DEADiiiiiiiiiiiii");
 		break;
 	default:
 		break;
