@@ -265,7 +265,7 @@ bool j1Player::PostUpdate()
 // Called before quitting
 bool j1Player::CleanUp()
 {
-	LOG("Freeing scene");
+	LOG("Freeing player");
 
 	return true;
 }

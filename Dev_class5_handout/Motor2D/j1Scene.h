@@ -39,7 +39,7 @@ public:
 
 private:
 
-	int currmap = 0;
+	int currmap = 2;
 	p2List<const char*> MapsList;
 	p2List_item<const char*>* CurrentMap = nullptr;
 };

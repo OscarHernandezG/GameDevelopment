@@ -171,3 +171,37 @@ bool j1Audio::PlayFx(unsigned int id, int repeat)
 
 	return ret;
 }
+
+
+// Load
+void j1Audio::Load(const pugi::xml_node&  savegame) {
+
+	volume = savegame.child("volume").attribute("music").as_float(0);
+	Mix_VolumeMusic(volume);
+}
+
+//Save
+void j1Audio::Save(const pugi::xml_node&  savegame)const {
+	savegame.child("volume").attribute("music").set_value(volume);
+}
+
+//Volume
+
+void j1Audio::VolumeUp() {
+	if (volume < 1) {
+		volume = (volume * 128) + 0.5f;
+		Mix_VolumeMusic(volume);
+		volume /= 128;
+		LOG("%f", volume);
+	}
+}
+
+
+void j1Audio::VolumeDown() {
+	if (volume > 0) {
+		volume = (volume * 128) - 0.5f;
+		Mix_VolumeMusic(volume);
+		volume /= 128;
+		LOG("%f", volume);
+	}
+}
