@@ -433,9 +433,9 @@ ColisionType j1Map::CheckColision(int gid) {
 
 			case 1:
 				ret = GROUND;
-			/*	rect = &blit_tilesets->data->GetTileRect(layer->data->data[gid]);
+				rect = &blit_tilesets->data->GetTileRect(layer->data->data[gid]);
 				App->render->Blit(blit_tilesets->data->texture, App->player->x, App->player->y, rect);
-				LOG("%s", layer->data->name);*/
+				LOG("%s", layer->data->name);
 				break;
 			case 2:
 				ret = DEATH;

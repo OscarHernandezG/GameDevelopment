@@ -12,7 +12,7 @@
   </renderer>
 
   <window>
-    <resolution width="910" height="512" scale="1"/>
+    <resolution width="1251" height="704" scale="1"/>
     <fullscreen value="false"/>
     <borderless value="false"/>
     <resizable value="false"/>
@@ -34,7 +34,7 @@
   </scene>
 
   <audio>
-    <volume music = "0.5"></volume>
+    <volume music = "0.2"></volume>
   </audio>
 
 </config>

@@ -14,8 +14,9 @@ enum State {
 	RUNNING_LEFT,
 	JUMPING_RIGHT,
 	JUMPING_LEFT,
-	SHIFT,
-	
+	SHIFT_RIGHT,
+	SHIFT_LEFT,
+
 	DEAD
 
 };
@@ -70,6 +71,8 @@ private:
 	bool run_left = false;
 	bool run_right = false;
 	bool jump = false;
+	bool CanJump = true;
+	bool slide = false;
 	bool ground = false;
 	State PlayerState = IDLE;
 
@@ -78,7 +81,7 @@ private:
 	Animation Run;
 	Animation Slide;
 	Animation* CurrentAnim = nullptr;
-	uint pos = 0;
+	uint pos = 0, lastTime = 0, currentTime = 0;
 
 	int size=0;
 	

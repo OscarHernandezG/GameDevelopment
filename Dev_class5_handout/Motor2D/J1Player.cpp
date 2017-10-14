@@ -95,7 +95,7 @@ bool j1Player::Start()
 		Jump.PushBack({ ax[i],ay[i],aw[i],ah[i] });
 	}
 	Jump.loop = false;
-	Jump.speed = 0.1f;
+	Jump.speed = 0.2f;
 
 	// Run Animation
 
@@ -121,8 +121,10 @@ bool j1Player::Start()
 	movement.x = 0;
 	movement.y = 0;
 
+	App->render->camera.y = -App->map->data.tile_width;
+
 	x = 0;
-	y = 199;
+	y = 459;
 
 	return true;
 }
@@ -136,6 +138,30 @@ bool j1Player::PreUpdate()
 // Called each loop iteration
 bool j1Player::Update(float dt)
 {
+	
+	// "Gravity"
+
+	if (PlayerState != DEAD) {
+
+		pos = App->map->MapPosition(App->map->data.tilesets.start->data, x, y + 118);
+
+		ColisionType colision1 = App->map->CheckColision(pos);
+		ColisionType colision2 = App->map->CheckColision(pos + 1);
+
+
+		if (colision1 == NONE && colision2 == NONE) {
+			y += 2;
+			LOG("y+2");
+		}
+		else if (colision1 == DEATH && colision2 == DEATH) {
+			PlayerState = DEAD;
+		}
+		else if (colision1 == GROUND || colision2 == GROUND) {
+			CanJump = true;
+			Jump.Reset();
+		}
+
+	}
 
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
 
@@ -180,11 +206,12 @@ bool j1Player::Update(float dt)
 
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
+	if ((App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) && CanJump) {
 
 		pos = App->map->MapPosition(App->map->data.tilesets.start->data, x, y);
 
 		ColisionType colision = App->map->CheckColision(pos);
+
 
 		if (colision == NONE) {
 			if (PlayerState == RUNNING_LEFT) {
@@ -203,17 +230,22 @@ bool j1Player::Update(float dt)
 	}
 
 
-	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN) {
+	if ((App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_DOWN) && slide == false && CanJump == true) {
+
+		
 		pos = App->map->MapPosition(App->map->data.tilesets.start->data, x , y + 118/2);
 
 		ColisionType colision = App->map->CheckColision(pos + 2);
 
 		if (colision == NONE) {
+			slide = true;
+			lastTime = SDL_GetTicks();
+			y = y + App->map->data.tile_width / 2;
 			if (PlayerState == RUNNING_LEFT) {
-				PlayerState = SHIFT;
+				PlayerState = SHIFT_LEFT;			
 			}
 			else {
-				PlayerState = SHIFT;
+				PlayerState = SHIFT_RIGHT;			
 			}
 		}
 		else if (colision == GROUND) {
@@ -223,36 +255,18 @@ bool j1Player::Update(float dt)
 			PlayerState = DEAD;
 	}
 
-	// "Gravity"
-
-	if (PlayerState != DEAD) {
-
-		pos = App->map->MapPosition(App->map->data.tilesets.start->data, x, y + 118);
-
-
-
-		ColisionType colision1 = App->map->CheckColision(pos);
-		ColisionType colision2 = App->map->CheckColision(pos + 1);
-
-
-		if (colision1 == NONE && colision2 == NONE) {
-			y += 2;
-			LOG("y+2");
-		}
-		else if (colision1 == DEATH && colision2 == DEATH) {
-			PlayerState = DEAD;
-		}
-	}
 
 	if (jump) {
 
 		speed.y++;
+		CanJump = false;
 		pos = App->map->MapPosition(App->map->data.tilesets.start->data, x, y);
 		ColisionType colision1 = App->map->CheckColision(pos);
 		ColisionType colision2 = App->map->CheckColision(pos + 1);
 		//ColisionType colision3 = App->map->CheckColision(pos + 2 * (App->map->data.layers.start->data->width));
-		if (speed.y == 0 || (colision1 != NONE || colision2 != NONE))
+		if (speed.y == 0 || (colision1 != NONE || colision2 != NONE)) {
 			jump = false;
+		}
 
 		if ((colision1 == DEATH || colision2 == DEATH))
 			PlayerState = DEAD;
@@ -268,19 +282,39 @@ bool j1Player::Update(float dt)
 
 	}
 
+	if (slide) {
+		currentTime = SDL_GetTicks();
+		if (currentTime > lastTime + 500) {
+			slide = false;
+			y = y - App->map->data.tile_width/2;		
+		}
+		else {
+			if (PlayerState == RUNNING_LEFT) {
+				PlayerState = SHIFT_LEFT;
+			}
+			else {
+				PlayerState = SHIFT_RIGHT;
+			}
+		}
+	}
+
+
 	
 	switch (PlayerState)
 	{
 	case IDLE:
+		if(CanJump)
 		CurrentAnim = &Idle;
 		LOG("IDLE");
 		break;
 	case RUNNING_RIGHT:
+		if (CanJump)
 		CurrentAnim = &Run;
 		x+=2;
 		flip = SDL_FLIP_NONE;
 		break;
 	case RUNNING_LEFT:
+		if (CanJump)
 		CurrentAnim = &Run;
 		x-=2;
 		flip = SDL_FLIP_HORIZONTAL;
@@ -297,14 +331,19 @@ bool j1Player::Update(float dt)
 		speed.y = -20;
 		jump = true;
 		break;
-	case SHIFT:
+	case SHIFT_RIGHT:
+		CurrentAnim = &Slide;
+		flip = SDL_FLIP_NONE;
+		x += 6;
+		break;
+	case SHIFT_LEFT:
 		CurrentAnim = &Slide;
 		flip = SDL_FLIP_HORIZONTAL;
-		x += 200;
+		x -= 6;
 		break;
 	case DEAD:
-		x = y = 0;
-		App->render->camera.x = 0;
+		x = App->render->camera.x = 0;
+		y = 459;
 		LOG("DEADiiiiiiiiiiiii");
 		break;
 	default:
