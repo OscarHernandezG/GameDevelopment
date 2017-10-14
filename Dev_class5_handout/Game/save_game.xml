@@ -3,8 +3,8 @@
 	<input />
 	<window />
 	<textures />
-	<audio volume="1">
-		<music />
+	<audio>
+		<volume music="0.5" />
 	</audio>
 	<map />
 	<scene />

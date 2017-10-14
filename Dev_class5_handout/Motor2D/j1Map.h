@@ -7,7 +7,7 @@
 #include "j1Module.h"
 
 // TODO 1: Create a struct for the map layer
-
+ 
 struct MapLayer {
 
 	const char* name = nullptr;
@@ -130,6 +130,8 @@ public:
 
 	MapData data;
 	bool col;
+
+	const char* music_path = nullptr;
 
 private:
 

@@ -28,6 +28,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	map = new j1Map();
 	player = new j1Player();
 
+
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
 	AddModule(input);
@@ -81,6 +82,7 @@ bool j1App::Awake()
 		app_config = config.child("app");
 		title.create(app_config.child("title").child_value());
 		organization.create(app_config.child("organization").child_value());
+		save_game = load_game = app_config.child("save_game").child_value();
 	}
 
 	if(ret == true)
@@ -94,9 +96,7 @@ bool j1App::Awake()
 			item = item->next;
 		}
 	}
-
-	save_game = load_game = "save_game.xml";
-
+	
 	return ret;
 }
 

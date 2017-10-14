@@ -7,6 +7,7 @@
 #include "j1Input.h"
 #include <math.h>
 #include "J1Player.h"
+#include "j1Audio.h"
 
 j1Map::j1Map() : j1Module(), map_loaded(false)
 {
@@ -24,7 +25,8 @@ bool j1Map::Awake(pugi::xml_node& config)
 	bool ret = true;
 
 	folder.create(config.child("folder").child_value());
-
+	music_path = config.child("music").attribute("level").value();
+	LOG("%s", music_path);
 	return ret;
 }
 
@@ -126,6 +128,9 @@ bool j1Map::CleanUp()
 // Load new map
 bool j1Map::Load(const char* file_name)
 {
+	LOG("playing %s", music_path);
+	App->audio->PlayMusic(music_path);
+
 	bool ret = true;
 	p2SString tmp("%s%s", folder.GetString(), file_name);
 
@@ -208,6 +213,9 @@ bool j1Map::Load(const char* file_name)
 			item_layer = item_layer->next;
 		}
 	}
+
+
+
 
 	map_loaded = ret;
 

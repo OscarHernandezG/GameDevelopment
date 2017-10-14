@@ -3,6 +3,8 @@
 #include "j1Audio.h"
 #include "p2List.h"
 
+
+
 #include "SDL/include/SDL.h"
 #include "SDL_mixer\include\SDL_mixer.h"
 #pragma comment( lib, "SDL_mixer/libx86/SDL2_mixer.lib" )
@@ -49,6 +51,12 @@ bool j1Audio::Awake(pugi::xml_node& config)
 		active = false;
 		ret = true;
 	}
+
+
+	volume = config.child("volume").attribute("music").as_float();
+	Mix_VolumeMusic(volume*128);
+
+
 
 	return ret;
 }
@@ -176,8 +184,8 @@ bool j1Audio::PlayFx(unsigned int id, int repeat)
 // Load
 bool j1Audio::Load(pugi::xml_node&  data) {
 
-	volume = data.child("volume").attribute("music").as_float(0);
-	Mix_VolumeMusic(volume);
+	volume = data.child("volume").attribute("music").as_float();
+	Mix_VolumeMusic(volume*128);
 
 	return true;
 }
@@ -185,9 +193,9 @@ bool j1Audio::Load(pugi::xml_node&  data) {
 //Save
 bool j1Audio::Save(pugi::xml_node&  data)const {
 
-	pugi::xml_node audio = data.append_child("music");
+	pugi::xml_node audio = data.append_child("volume");
 
-	data.append_attribute("volume") = volume;
+	audio.append_attribute("music") = volume;
 
 	return true;
 }
