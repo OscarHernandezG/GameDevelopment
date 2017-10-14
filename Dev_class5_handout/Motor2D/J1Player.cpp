@@ -235,7 +235,7 @@ bool j1Player::Update(float dt)
 		
 		pos = App->map->MapPosition(App->map->data.tilesets.start->data, x , y + 118/2);
 
-		ColisionType colision = App->map->CheckColision(pos + 2);
+		ColisionType colision = App->map->CheckColision(pos + 3);
 
 		if (colision == NONE) {
 			slide = true;
