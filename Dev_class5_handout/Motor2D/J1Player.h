@@ -7,6 +7,7 @@
 struct SDL_Texture;
 struct SDL_Rect;
 
+
 enum State {
 	IDLE = 0,
 	RUNNING_RIGHT,
@@ -78,6 +79,15 @@ private:
 	Animation Slide;
 	Animation* CurrentAnim = nullptr;
 	uint pos = 0;
+
+	int size=0;
+	
+	int* ax = nullptr;
+	int* ay = nullptr;
+	int* aw = nullptr;
+	int* ah = nullptr;
+
+	p2List<SDL_Rect> animations_list;
 
 	SDL_RendererFlip flip = SDL_FLIP_NONE;
 };

@@ -39,28 +39,81 @@ bool j1Player::Start()
 	if (texture != nullptr) {
 		LOG("OK");
 	}
+	pugi::xml_document	animation_file;
+	pugi::xml_parse_result animations = animation_file.load_file("textures/animations.xml");
+
+	pugi::xml_node SpriteMapping = animation_file.child("SpriteMapping");
+
+
+	for (pugi::xml_node iterator = SpriteMapping.child("Sprites").child("Sprite"); iterator != nullptr; iterator = iterator.next_sibling("Sprite"))
+	{
+		int ax = iterator.child("Coordinates").child("X").text().as_int();
+		int ay = iterator.child("Coordinates").child("Y").text().as_int();
+		int aw = iterator.child("Coordinates").child("Width").text().as_int();
+		int ah = iterator.child("Coordinates").child("Height").text().as_int();
+
+		animations_list.add({ ax,ay,aw,ah });
+
+		size++;
+	}
+
+
+	ax = new int[size];
+	ay = new int[size];
+	aw = new int[size];
+	ah = new int[size];
+	int i = 0;
+	p2List_item<SDL_Rect>* aux = animations_list.start;
+
+	while (aux != nullptr) {
+
+		ax[i] = aux->data.x;
+		ay[i] = aux->data.y;
+		aw[i] = aux->data.w;
+		ah[i] = aux->data.h;
+
+		aux = aux->next;
+		i++;
+
+	}
+
+
+	LOG("%i", animations_list.count());
 
 	// Idle Animation
-	//Idle.PushBack({ ,,, });
+
+	for (int i = 0; i < 10; i++) {
+		Idle.PushBack({ ax[i],ay[i],aw[i],ah[i] });
+	}
+
 	Idle.loop = true;
 	Idle.speed = 0.1f;
 
 	// Jump Animation
-	//Jump.PushBack({ ,,, });
+
+	for (int i = 18; i < 28; i++) {
+		Jump.PushBack({ ax[i],ay[i],aw[i],ah[i] });
+	}
 	Jump.loop = false;
 	Jump.speed = 0.1f;
 
 	// Run Animation
-	Run.PushBack({ 0,0,70,124 });
+
+	for (int i = 10; i < 18; i++) {
+		Run.PushBack({ ax[i],ay[i],aw[i],ah[i] });
+	}
 	Run.loop = true;
-	Run.speed = 0.1f;
+	Run.speed = 0.2f;
 
 	// Slide Animation
-//	Slide.PushBack({ ,,, });
+
+	for (int i = 38; i < 48; i++) {
+		Slide.PushBack({ ax[i],ay[i],aw[i],ah[i] });
+	}
 	Slide.loop = false;
 	Slide.speed = 0.1f;
 
-	CurrentAnim = &Run;
+	CurrentAnim = &Idle;
 
 	speed.x = 0;
 	speed.y = 0;
@@ -206,13 +259,20 @@ bool j1Player::Update(float dt)
 
 		y += speed.y;
 
+		if (PlayerState == RUNNING_LEFT) {
+			PlayerState == JUMPING_LEFT;
+		}
+		else if (PlayerState == RUNNING_RIGHT) {
+			PlayerState == JUMPING_RIGHT;
+		}
+
 	}
 
 	
 	switch (PlayerState)
 	{
 	case IDLE:
-		CurrentAnim = &Run;
+		CurrentAnim = &Idle;
 		LOG("IDLE");
 		break;
 	case RUNNING_RIGHT:
@@ -226,24 +286,25 @@ bool j1Player::Update(float dt)
 		flip = SDL_FLIP_HORIZONTAL;
 		break;
 	case JUMPING_RIGHT:
-		CurrentAnim = &Run;
+		CurrentAnim = &Jump;
 		flip = SDL_FLIP_NONE;
 		speed.y = -20;
 		jump = true;
 		break;
 	case JUMPING_LEFT:
-		CurrentAnim = &Run;
+		CurrentAnim = &Jump;
 		flip = SDL_FLIP_HORIZONTAL;
 		speed.y = -20;
 		jump = true;
 		break;
 	case SHIFT:
-		CurrentAnim = &Run;
+		CurrentAnim = &Slide;
 		flip = SDL_FLIP_HORIZONTAL;
 		x += 200;
 		break;
 	case DEAD:
 		x = y = 0;
+		App->render->camera.x = 0;
 		LOG("DEADiiiiiiiiiiiii");
 		break;
 	default:

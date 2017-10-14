@@ -48,7 +48,7 @@ void j1Map::Draw()
 			for (int id = 0; id < layer->data->size_data; id++) {
 				rect = &blit_tilesets->data->GetTileRect(layer->data->data[id]);
 
-				App->render->Blit(blit_tilesets->data->texture, x, y, rect);
+				App->render->Blit(blit_tilesets->data->texture, x, y, rect,layer->data->speed);
 
 				w++;
 				if (w == layer->data->width) {
@@ -356,7 +356,19 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 	layer->name = node.attribute("name").as_string();
 	layer->width = node.attribute("width").as_int();
 	layer->height = node.attribute("height").as_int();
-	layer->property = node.child("properties").child("property").attribute("value").as_int();
+	
+	const char* aux = "speed";
+	const char* aux2 = "speed";
+
+	LOG("%s", aux2);
+
+	
+	if (strcmp(aux,aux2))
+		layer->speed = node.child("properties").child("property").attribute("value").as_int();
+	
+	else 
+		layer->property = node.child("properties").child("property").attribute("value").as_int();
+
 	for (pugi::xml_node iterator = node.child("data").child("tile"); iterator != nullptr; iterator = iterator.next_sibling())
 	{
 		layer->size_data++;

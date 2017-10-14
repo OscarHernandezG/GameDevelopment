@@ -15,6 +15,7 @@ struct MapLayer {
 	unsigned int* data;
 	uint size_data = 0;
 	int property = 0;
+	float speed = 1;
 
 	~MapLayer() {
 		RELEASE(data);

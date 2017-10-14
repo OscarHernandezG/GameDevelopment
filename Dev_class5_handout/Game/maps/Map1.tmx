@@ -44,6 +44,9 @@
   </tile>
  </tileset>
  <layer name="Capa de Patrones 1" width="30" height="8">
+  <properties>
+   <property name="speed" type="float" value="0.5"/>
+  </properties>
   <data>
    <tile gid="3"/>
    <tile gid="3"/>
