@@ -174,15 +174,22 @@ bool j1Audio::PlayFx(unsigned int id, int repeat)
 
 
 // Load
-void j1Audio::Load(const pugi::xml_node&  savegame) {
+bool j1Audio::Load(pugi::xml_node&  data) {
 
-	volume = savegame.child("volume").attribute("music").as_float(0);
+	volume = data.child("volume").attribute("music").as_float(0);
 	Mix_VolumeMusic(volume);
+
+	return true;
 }
 
 //Save
-void j1Audio::Save(const pugi::xml_node&  savegame)const {
-	savegame.child("volume").attribute("music").set_value(volume);
+bool j1Audio::Save(pugi::xml_node&  data)const {
+
+	pugi::xml_node audio = data.append_child("music");
+
+	data.append_attribute("volume") = volume;
+
+	return true;
 }
 
 //Volume

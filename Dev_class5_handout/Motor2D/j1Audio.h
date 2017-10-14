@@ -35,10 +35,10 @@ public:
 	bool PlayFx(unsigned int fx, int repeat = 0);
 
 	// Load
-	void Load(const pugi::xml_node&  savegame);
+	bool Load(pugi::xml_node&  savegame);
 
 	//Save
-	void Save(const pugi::xml_node&  savegame) const;
+	bool Save(pugi::xml_node&  savegame) const;
 
 	//Volume
 

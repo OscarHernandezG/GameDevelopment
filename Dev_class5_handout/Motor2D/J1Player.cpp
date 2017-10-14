@@ -181,6 +181,7 @@ bool j1Player::Update(float dt)
 		ColisionType colision1 = App->map->CheckColision(pos);
 		ColisionType colision2 = App->map->CheckColision(pos + 1);
 
+
 		if (colision1 == NONE && colision2 == NONE) {
 			y += 2;
 			LOG("y+2");
@@ -199,6 +200,9 @@ bool j1Player::Update(float dt)
 		//ColisionType colision3 = App->map->CheckColision(pos + 2 * (App->map->data.layers.start->data->width));
 		if (speed.y == 0 || (colision1 != NONE || colision2 != NONE))
 			jump = false;
+
+		if ((colision1 == DEATH || colision2 == DEATH))
+			PlayerState = DEAD;
 
 		y += speed.y;
 
@@ -266,6 +270,27 @@ bool j1Player::PostUpdate()
 bool j1Player::CleanUp()
 {
 	LOG("Freeing player");
+
+	return true;
+}
+
+
+// Load
+bool j1Player::Load(pugi::xml_node&  data) {
+
+	x = data.child("position").attribute("x").as_int();
+	y = data.child("position").attribute("y").as_int();
+	return true;
+}
+
+
+//Save
+bool j1Player::Save(pugi::xml_node& data) const
+{
+	pugi::xml_node cam = data.append_child("position");
+
+	cam.append_attribute("x") = x;
+	cam.append_attribute("y") = y;
 
 	return true;
 }

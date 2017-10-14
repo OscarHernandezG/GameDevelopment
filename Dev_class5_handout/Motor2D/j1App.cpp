@@ -95,6 +95,8 @@ bool j1App::Awake()
 		}
 	}
 
+	save_game = load_game = "save_game.xml";
+
 	return ret;
 }
 

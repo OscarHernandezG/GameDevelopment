@@ -60,6 +60,12 @@ bool j1Scene::Update(float dt)
 	if(App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
 		App->SaveGame();
 
+	if (App->input->GetKey(SDL_SCANCODE_KP_PLUS) == KEY_REPEAT)
+		App->audio->VolumeUp();
+
+	if (App->input->GetKey(SDL_SCANCODE_KP_MINUS) == KEY_REPEAT) 
+		App->audio->VolumeDown();
+
 	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 		App->render->camera.y -= 3;
 
@@ -75,8 +81,10 @@ bool j1Scene::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) {
 		
 		App->map->CleanUp();
-		App->map->Load("Map1.tmx");
+		App->tex->CleanUp();
 
+		App->map->Load("Map1.tmx");
+		App->player->Start();
 		
 
 		//CurrentMap = MapsList.start;
@@ -88,16 +96,12 @@ bool j1Scene::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN) {
 
 		App->map->CleanUp();
-		switch (currmap)
-		{
-		case 1:
-			App->map->Load("Map1.tmx");
-		case 2:
-			App->map->Load("Map2.tmx");
-		default:
-			break;
-		}
+		App->tex->CleanUp();
 
+
+		App->map->Load("Map2.tmx");
+
+		App->player->Start();
 
 		/*
 
