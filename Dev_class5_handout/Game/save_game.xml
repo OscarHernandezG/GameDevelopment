@@ -4,12 +4,12 @@
 	<window />
 	<textures />
 	<audio>
-		<volume music="0.5" />
+		<volume music="0.03515625" />
 	</audio>
 	<map />
 	<scene />
 	<player>
-		<position x="0" y="203" />
+		<position x="220" y="138" />
 	</player>
 	<renderer>
 		<camera x="0" y="0" />
