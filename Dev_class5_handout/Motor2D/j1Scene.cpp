@@ -77,20 +77,17 @@ bool j1Scene::Update(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) {
 		
-
 		LoadScene("Map1.tmx");
 		currmap = 1;
-		App->player->y = 459;
-
-
-		
+		App->player->y = 395;
+	
 	}
 	
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN) {
 
 
 		LoadScene("Map2.tmx");
-		App->player->y = 260;
+		App->player->y = 196;
 		currmap = 2;
 // 		App->player->Start();
 

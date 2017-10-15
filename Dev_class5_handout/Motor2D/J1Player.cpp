@@ -120,11 +120,10 @@ bool j1Player::Start()
 	speed.x = 0;
 	speed.y = 0;
 
-
-	App->render->camera.y = -App->map->data.tile_width;
+	//App->render->camera.y = -App->map->data.tile_width;
 
 	x = 0;
-	y = 459;
+	y = 395;
 
 	return true;
 }
@@ -203,7 +202,7 @@ bool j1Player::Update(float dt)
 			else
 				PlayerState = DEAD;
 		}
-		if (colision1 == WIN && colision3 == WIN) {
+		if (colision1 == WIN) {
 			PlayerState = PLAYER_WIN;
 		}
 
@@ -346,14 +345,14 @@ bool j1Player::Update(float dt)
 		break;
 	case PLAYER_WIN:
 		x = 0;
-		y = 260;
+		y = 196;
 		App->map->CleanUp();
 		App->map->Load("Map2.tmx");
 		App->player->y = 0;
 		break;
 	case DEAD:
 		x = App->render->camera.x = 0;
-		y = 459;
+		y = 395;
 		LOG("DEADiiiiiiiiiiiii");
 		break;
 	default:
