@@ -5,7 +5,7 @@
  </tileset>
  <layer name="Capa de Patrones 1" width="30" height="12">
   <properties>
-   <property name="bg" type="int" value="0"/>
+   <property name="speed" type="float" value="0.5"/>
   </properties>
   <data>
    <tile gid="0"/>

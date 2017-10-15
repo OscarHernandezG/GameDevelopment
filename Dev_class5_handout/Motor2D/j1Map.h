@@ -134,7 +134,7 @@ public:
 	MapData data;
 	bool col;
 
-	const char* music_path = nullptr;
+	const char* music_path;
 
 private:
 

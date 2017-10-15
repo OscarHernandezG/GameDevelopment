@@ -131,9 +131,9 @@ bool j1Map::CleanUp()
 bool j1Map::Load(const char* file_name)
 {
 
-	// App->audio->PlayMusic(music_path);
+	App->audio->PlayMusic(music_path);
 
-	App->audio->PlayMusic("audio/music/Urban-Jungle-2061_Looping.ogg");
+//	App->audio->PlayMusic("audio/music/Urban-Jungle-2061_Looping.ogg");
 
 	bool ret = true;
 	p2SString tmp("%s%s", folder.GetString(), file_name);
@@ -361,17 +361,12 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 	layer->width = node.attribute("width").as_int();
 	layer->height = node.attribute("height").as_int();
 	
-	const char* aux = "speed";
-	const char* aux2 = "speed";
 
-	LOG("%s", aux2);
-
+	const char* aux = node.child("properties").child("property").attribute("name").as_string();
 	
-	if (strcmp(aux,aux2))
-		layer->speed = node.child("properties").child("property").attribute("value").as_int();
+	if (strcmp(aux,"speed") == 0)
+		layer->speed = node.child("properties").child("property").attribute("value").as_float();
 	
-	else 
-		layer->property = node.child("properties").child("property").attribute("value").as_int();
 
 	for (pugi::xml_node iterator = node.child("data").child("tile"); iterator != nullptr; iterator = iterator.next_sibling())
 	{
