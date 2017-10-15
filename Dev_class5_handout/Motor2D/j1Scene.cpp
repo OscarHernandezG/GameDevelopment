@@ -77,12 +77,7 @@ bool j1Scene::Update(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) {
 		
-		App->map->CleanUp();
-//		App->tex->CleanUp();
-		
-		App->map->Load("Map1.tmx");
-		currmap = 1;
-//		App->player->Start();
+
 		
 	}
 	
@@ -154,6 +149,13 @@ bool j1Scene::CleanUp()
 {
 	LOG("Freeing scene");
 
+	return true;
+}
+
+bool j1Scene::LoadScene(const char* path) {
+
+	App->map->CleanUp();
+	App->map->Load(path);
 	return true;
 }
 

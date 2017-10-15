@@ -34,6 +34,8 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	bool LoadScene(const char* path);
+
 	// Load
 	bool Load(pugi::xml_node&  savegame);
 
