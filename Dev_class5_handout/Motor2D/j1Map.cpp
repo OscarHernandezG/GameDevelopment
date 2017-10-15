@@ -131,9 +131,9 @@ bool j1Map::CleanUp()
 bool j1Map::Load(const char* file_name)
 {
 
-	App->audio->PlayMusic(music_path);
+//	App->audio->PlayMusic(music_path);
 
-//	App->audio->PlayMusic("audio/music/Urban-Jungle-2061_Looping.ogg");
+	App->audio->PlayMusic("audio/music/Urban-Jungle-2061_Looping.ogg");
 
 	bool ret = true;
 	p2SString tmp("%s%s", folder.GetString(), file_name);

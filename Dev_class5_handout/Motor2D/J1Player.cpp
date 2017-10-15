@@ -343,11 +343,15 @@ bool j1Player::Update(float dt)
 		y = 196;
 		App->map->CleanUp();
 		App->map->Load("Map2.tmx");
+		App->scene->currmap = 2;
 		App->player->y = 0;
 		break;
 	case DEAD:
 		x = App->render->camera.x = 0;
-		y = 395;
+		if (App->scene->currmap == 1)
+			y = 395;
+		else
+			y = 196;
 		break;
 	default:
 		break;

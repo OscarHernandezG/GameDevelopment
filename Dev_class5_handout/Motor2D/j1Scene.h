@@ -42,10 +42,10 @@ public:
 	//Save
 	bool Save(pugi::xml_node& data) const;
 	
-
+	int currmap = 1;
 private:
 
-	int currmap = 2;
+
 	p2List<const char*> MapsList;
 	p2List_item<const char*>* CurrentMap = nullptr;
 };
