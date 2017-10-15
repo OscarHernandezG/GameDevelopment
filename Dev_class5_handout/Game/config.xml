@@ -2,7 +2,7 @@
 
 <config>
   <app>
-    <title>Game Development Testbed</title>
+    <title>Factory Escape</title>
     <organization>UPC</organization>
     <save_game>save_game.xml</save_game>
   </app>

@@ -340,9 +340,7 @@ bool j1Player::Update(float dt)
 	case PLAYER_WIN:
 		x = 0;
 		y = 196;
-		App->map->CleanUp();
-		App->map->Load("Map2.tmx");
-		App->scene->currmap = 2;
+		App->scene->LoadScene(2);
 		App->player->y = 0;
 		break;
 	case DEAD:
