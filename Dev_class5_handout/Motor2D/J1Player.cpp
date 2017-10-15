@@ -203,6 +203,9 @@ bool j1Player::Update(float dt)
 			else
 				PlayerState = DEAD;
 		}
+		if (colision1 == WIN || colision2 == WIN) {
+			PlayerState = PLAYER_WIN;
+		}
 
 	}
 
@@ -340,6 +343,13 @@ bool j1Player::Update(float dt)
 		CurrentAnim = &Slide;
 		flip = SDL_FLIP_HORIZONTAL;
 		x -= 6;
+		break;
+	case PLAYER_WIN:
+		x = 0;
+		y = 0;
+		App->map->CleanUp();
+		App->map->Load("Map2.tmx");
+		App->player->y = 0;
 		break;
 	case DEAD:
 		x = App->render->camera.x = 0;

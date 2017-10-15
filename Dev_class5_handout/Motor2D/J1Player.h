@@ -17,6 +17,8 @@ enum State {
 	SHIFT_RIGHT,
 	SHIFT_LEFT,
 
+	PLAYER_WIN,
+
 	DEAD
 
 };
