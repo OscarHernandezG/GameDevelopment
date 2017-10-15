@@ -133,6 +133,8 @@ bool j1Map::Load(const char* file_name)
 	LOG("playing %s", music_path);
 	App->audio->PlayMusic(music_path);
 
+	
+
 	bool ret = true;
 	p2SString tmp("%s%s", folder.GetString(), file_name);
 
@@ -218,7 +220,7 @@ bool j1Map::Load(const char* file_name)
 
 
 
-
+	App->render->camera.x = 0;
 	map_loaded = ret;
 
 	return ret;

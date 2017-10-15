@@ -63,11 +63,11 @@ bool j1Scene::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_KP_MINUS) == KEY_REPEAT) 
 		App->audio->VolumeDown();
 
-	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
+	/*if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 		App->render->camera.y -= 3;
 
 	if(App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
-		App->render->camera.y += 3;
+		App->render->camera.y += 3;*/
 
 	/*if(App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
 		App->render->camera.x += 3;
@@ -82,6 +82,7 @@ bool j1Scene::Update(float dt)
 		
 		App->map->Load("Map1.tmx");
 		currmap = 1;
+		App->player->y = 459;
 //		App->player->Start();
 		
 	}
@@ -93,7 +94,7 @@ bool j1Scene::Update(float dt)
 
 
 		App->map->Load("Map2.tmx");
-		App->player->y = 0;
+		App->player->y = 260;
 		currmap = 2;
 // 		App->player->Start();
 
