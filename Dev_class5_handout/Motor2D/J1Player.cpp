@@ -371,6 +371,13 @@ bool j1Player::CleanUp()
 {
 	LOG("Freeing player");
 
+	delete[] ax;
+	delete[] ay;
+	delete[] aw;
+	delete[] ah;
+
+	animations_list.clear();
+
 	return true;
 }
 

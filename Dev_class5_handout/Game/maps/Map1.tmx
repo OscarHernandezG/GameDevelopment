@@ -1114,14 +1114,14 @@
    <tile gid="0"/>
   </data>
  </layer>
- <layer name="Capa de patrones 4" width="30" height="12" visible="0" opacity="0.47">
+ <layer name="Capa de patrones 4" width="30" height="12" opacity="0.47">
   <properties>
    <property name="Collision" type="bool" value="true"/>
   </properties>
   <data>
    <tile gid="30"/>
-   <tile gid="30"/>
-   <tile gid="30"/>
+   <tile gid="29"/>
+   <tile gid="31"/>
    <tile gid="30"/>
    <tile gid="30"/>
    <tile gid="30"/>
@@ -1328,9 +1328,18 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
+   <tile gid="31"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="30"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="30"/>
    <tile gid="30"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -1339,8 +1348,6 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="30"/>
-   <tile gid="30"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -1351,14 +1358,7 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
+   <tile gid="31"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>

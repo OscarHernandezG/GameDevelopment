@@ -71,6 +71,8 @@ enum ColisionType
 {
 	NONE = 0,
 	GROUND,
+	WIN,
+
 	DEATH
 };
 // ----------------------------------------------------

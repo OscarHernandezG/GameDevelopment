@@ -419,36 +419,23 @@ int j1Map::MapPosition(TileSet* tile, int x, int y) {
 ColisionType j1Map::CheckColision(int gid) {
 
 	ColisionType ret = NONE;
-	int aux;
+	int colision;
 
-	p2List_item<TileSet*>* blit_tilesets = data.tilesets.start;
-
-//	p2List_item<MapLayer*>* layer = this->data.layers.end;
-
-	for (p2List_item<MapLayer*>* layer = this->data.layers.start; layer != nullptr; layer = layer->next) {
+	p2List_item<MapLayer*>* layer = this->data.layers.end;
 		
-		aux = layer->data->data[gid];
-		SDL_Rect* rect;
-		if (aux != 0) {
+		colision = layer->data->data[gid];
+	
+			switch (colision) {
 
-			switch (layer->data->property) {
-
-			case 1:
-				ret = GROUND;
-				//rect = &blit_tilesets->data->GetTileRect(layer->data->data[gid]);
-				//App->render->Blit(blit_tilesets->data->texture, App->player->x, App->player->y, rect);
-				//LOG("%s", layer->data->name);
-				break;
-			case 2:
+			case 29:
 				ret = DEATH;
-				//rect = &blit_tilesets->data->GetTileRect(layer->data->data[gid]);
-				//App->render->Blit(blit_tilesets->data->texture, App->player->x, App->player->y, rect);
-				LOG("DIE");
 				break;
-
+			case 30:
+				ret = GROUND;
+				break;
+			case 31:
+				ret = WIN;
 			}
-		}
-	}
-
-	return ret;
+			
+		return ret;
 }
