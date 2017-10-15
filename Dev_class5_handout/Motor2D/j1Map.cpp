@@ -26,7 +26,7 @@ bool j1Map::Awake(pugi::xml_node& config)
 
 	folder.create(config.child("folder").child_value());
 	music_path = config.child("music").attribute("level").value();
-	LOG("%s", music_path);
+
 	return ret;
 }
 

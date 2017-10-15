@@ -207,7 +207,6 @@ void j1Audio::VolumeUp() {
 		volume = (volume * 128) + 0.5f;
 		Mix_VolumeMusic(volume);
 		volume /= 128;
-		LOG("%f", volume);
 	}
 }
 
@@ -217,6 +216,5 @@ void j1Audio::VolumeDown() {
 		volume = (volume * 128) - 0.5f;
 		Mix_VolumeMusic(volume);
 		volume /= 128;
-		LOG("%f", volume);
 	}
 }
