@@ -154,7 +154,11 @@ bool j1Scene::CleanUp()
 bool j1Scene::LoadScene(const char* path) {
 
 	App->map->CleanUp();
+	App->audio->FreeMusic();
+	App->tex->FreeTextures();
+	App->player->CleanUp();
 	App->map->Load(path);
+	App->player->Start();
 	return true;
 }
 

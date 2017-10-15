@@ -58,6 +58,14 @@ bool j1Textures::CleanUp()
 	return true;
 }
 
+void j1Textures::FreeTextures() {
+	p2List_item<SDL_Texture*>* item;
+	for (item = textures.start; item != NULL; item = item->next)
+	{
+		SDL_DestroyTexture(item->data);
+	}
+}
+
 // Load new texture from file path
 SDL_Texture* const j1Textures::Load(const char* path)
 {

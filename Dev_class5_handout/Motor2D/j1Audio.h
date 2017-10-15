@@ -34,6 +34,16 @@ public:
 	// Play a previously loaded WAV
 	bool PlayFx(unsigned int fx, int repeat = 0);
 
+	// Free music
+
+	void FreeMusic() {
+		if (music != NULL)
+		{
+			Mix_FreeMusic(music);
+			music = nullptr;
+		}
+	}
+
 	// Load
 	bool Load(pugi::xml_node&  savegame);
 

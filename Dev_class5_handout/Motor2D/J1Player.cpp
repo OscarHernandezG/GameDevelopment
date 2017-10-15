@@ -34,9 +34,8 @@ bool j1Player::Awake()
 bool j1Player::Start()
 {
 	//Load player texture
-	if (texture == nullptr) {
+
 		texture = App->tex->Load("textures/robot_animation.png");
-	}
 
 	pugi::xml_document	animation_file;
 	pugi::xml_parse_result animations = animation_file.load_file("textures/animations.xml");
