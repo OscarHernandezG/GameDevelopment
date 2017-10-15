@@ -203,7 +203,7 @@ bool j1Player::Update(float dt)
 			else
 				PlayerState = DEAD;
 		}
-		if (colision1 == WIN || colision2 == WIN) {
+		if (colision1 == WIN && colision3 == WIN) {
 			PlayerState = PLAYER_WIN;
 		}
 
