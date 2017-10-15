@@ -34,7 +34,11 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	// Load
+	bool Load(pugi::xml_node&  savegame);
 
+	//Save
+	bool Save(pugi::xml_node& data) const;
 	
 
 private:

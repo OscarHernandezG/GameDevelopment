@@ -34,11 +34,13 @@ bool j1Player::Awake()
 bool j1Player::Start()
 {
 	//Load player texture
-
-	texture = App->tex->Load("textures/robot_animation.png");
-	if (texture != nullptr) {
-		LOG("OK");
+	if (texture == nullptr) {
+		texture = App->tex->Load("textures/robot_animation.png");
+		if (texture != nullptr) {
+			LOG("OK");
+		}
 	}
+
 	pugi::xml_document	animation_file;
 	pugi::xml_parse_result animations = animation_file.load_file("textures/animations.xml");
 
@@ -118,8 +120,6 @@ bool j1Player::Start()
 	speed.x = 0;
 	speed.y = 0;
 
-	movement.x = 0;
-	movement.y = 0;
 
 	App->render->camera.y = -App->map->data.tile_width;
 

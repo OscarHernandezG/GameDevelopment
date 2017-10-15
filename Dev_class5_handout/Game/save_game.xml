@@ -4,14 +4,16 @@
 	<window />
 	<textures />
 	<audio>
-		<volume music="0.5" />
+		<volume music="-0.00312499702" />
 	</audio>
 	<map />
-	<scene />
+	<scene>
+		<Map CurrentMap="2" />
+	</scene>
 	<player>
-		<position x="360" y="202" />
+		<position x="1474" y="330" />
 	</player>
 	<renderer>
-		<camera x="-58" y="0" />
+		<camera x="-670" y="-64" />
 	</renderer>
 </game_state>

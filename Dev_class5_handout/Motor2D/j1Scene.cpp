@@ -9,6 +9,7 @@
 #include "j1Map.h"
 #include "j1Scene.h"
 #include "J1Player.h"
+#include "J1Player.h"
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -77,23 +78,24 @@ bool j1Scene::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) {
 		
 		App->map->CleanUp();
-		App->tex->CleanUp();
+//		App->tex->CleanUp();
 		
 		App->map->Load("Map1.tmx");
-		
-		App->player->Start();
+		currmap = 1;
+//		App->player->Start();
 		
 	}
 	
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN) {
 
 		App->map->CleanUp();
-		App->tex->CleanUp();
+//		App->tex->CleanUp();
 
 
 		App->map->Load("Map2.tmx");
-	
-		App->player->Start();
+		App->player->y = 0;
+		currmap = 2;
+// 		App->player->Start();
 
 		/*
 
@@ -152,5 +154,35 @@ bool j1Scene::CleanUp()
 {
 	LOG("Freeing scene");
 
+	return true;
+}
+
+
+// Load
+bool j1Scene::Load(pugi::xml_node&  savegame) {
+	currmap = savegame.child("Map").attribute("CurrentMap").as_int();
+
+	App->map->CleanUp();
+
+	switch (currmap)
+	{
+	case 1:
+		App->map->Load("Map1.tmx");
+		break;
+	case 2:
+		App->map->Load("Map2.tmx");
+		break;
+	default:
+		break;
+	}
+	return true;
+}
+
+//Save
+bool j1Scene::Save(pugi::xml_node& data) const {
+
+	pugi::xml_node cam = data.append_child("Map");
+
+	cam.append_attribute("CurrentMap") = currmap;
 	return true;
 }
