@@ -36,9 +36,6 @@ bool j1Player::Start()
 	//Load player texture
 	if (texture == nullptr) {
 		texture = App->tex->Load("textures/robot_animation.png");
-		if (texture != nullptr) {
-			LOG("OK");
-		}
 	}
 
 	pugi::xml_document	animation_file;
@@ -150,7 +147,6 @@ bool j1Player::Update(float dt)
 
 		if (colision1 == NONE && colision2 == NONE) {
 			y += 2;
-			LOG("y+2");
 		}
 		else if (colision1 == DEATH && colision2 == DEATH) {
 			PlayerState = DEAD;
@@ -307,7 +303,6 @@ bool j1Player::Update(float dt)
 	case IDLE:
 		if(CanJump)
 		CurrentAnim = &Idle;
-		LOG("IDLE");
 		break;
 	case RUNNING_RIGHT:
 		if (CanJump)
@@ -353,7 +348,6 @@ bool j1Player::Update(float dt)
 	case DEAD:
 		x = App->render->camera.x = 0;
 		y = 395;
-		LOG("DEADiiiiiiiiiiiii");
 		break;
 	default:
 		break;
