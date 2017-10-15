@@ -77,8 +77,8 @@ bool j1Scene::Update(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) {
 		
-		LoadScene("Map1.tmx");
 		currmap = 1;
+		LoadScene(currmap);
 		App->player->y = 395;
 	
 	}
@@ -86,9 +86,8 @@ bool j1Scene::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN) {
 
 
-		LoadScene("Map2.tmx");
+		LoadScene(currmap);
 		App->player->y = 196;
-		currmap = 2;
 // 		App->player->Start();
 
 		/*
@@ -151,14 +150,23 @@ bool j1Scene::CleanUp()
 	return true;
 }
 
-bool j1Scene::LoadScene(const char* path) {
+bool j1Scene::LoadScene(int map) {
 
 	App->map->CleanUp();
 	App->audio->FreeMusic();
 	App->tex->FreeTextures();
 	App->player->CleanUp();
-	App->map->Load(path);
 	App->player->Start();
+
+	if (map == 1) {
+		App->map->Load("Map1.tmx");
+		currmap = 1;
+	}
+	else {
+		App->map->Load("Map2.tmx");
+		currmap = 2;
+	}
+
 	return true;
 }
 
