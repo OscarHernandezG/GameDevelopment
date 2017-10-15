@@ -76,14 +76,16 @@ private:
 	bool CanJump = true;
 	bool slide = false;
 	bool ground = false;
+	bool death = false;
 	State PlayerState = IDLE;
 
 	Animation Idle;
 	Animation Jump;
 	Animation Run;
 	Animation Slide;
+	Animation Die;
 	Animation* CurrentAnim = nullptr;
-	uint pos = 0, lastTime = 0, currentTime = 0;
+	uint pos = 0, lastTime = 0, currentTime = 0, dieTime = 0;
 
 	int size=0;
 	

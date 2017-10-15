@@ -111,6 +111,14 @@ bool j1Player::Start()
 	Slide.loop = false;
 	Slide.speed = 0.1f;
 
+	//Die Animation
+
+	for (int i = 28; i < 38; i++) {
+		Die.PushBack({ ax[i],ay[i],aw[i],ah[i] });
+	}
+	Die.loop = false;
+	Die.speed = 0.2f;
+
 	CurrentAnim = &Idle;
 
 	speed.x = 0;
@@ -136,27 +144,26 @@ bool j1Player::Update(float dt)
 	
 	// "Gravity"
 
-	if (PlayerState != DEAD) {
-
 		pos = App->map->MapPosition(App->map->data.tilesets.start->data, x, y + 118);
 
 		ColisionType colision1 = App->map->CheckColision(pos);
 		ColisionType colision2 = App->map->CheckColision(pos + 1);
 
 
-		if (colision1 == NONE && colision2 == NONE) {
+		if (colision1 != GROUND && colision2 != GROUND) {
 			y += 2;
 		}
-		else if (colision1 == DEATH && colision2 == DEATH) {
+		if (colision1 == DEATH && colision2 == DEATH) {
 			PlayerState = DEAD;
 		}
 		else if (colision1 == GROUND || colision2 == GROUND) {
 			CanJump = true;
 			Jump.Reset();
-		}
 
 	}
 
+	if (death == false) {
+		dieTime = SDL_GetTicks();
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
 
 		pos = App->map->MapPosition(App->map->data.tilesets.start->data, x, y);
@@ -295,6 +302,22 @@ bool j1Player::Update(float dt)
 		}
 	}
 
+	}
+
+	else if (death){
+		currentTime = SDL_GetTicks();
+		PlayerState = DEAD;
+		if (currentTime > dieTime + 1000) {
+			Die.Reset();
+			death = false;
+			PlayerState = IDLE;
+			x = App->render->camera.x = 0;
+			if (App->scene->currmap == 1)
+				y = 395;
+			else
+				y = 196;
+		}	
+	}
 
 	
 	switch (PlayerState)
@@ -344,11 +367,8 @@ bool j1Player::Update(float dt)
 		App->player->y = 0;
 		break;
 	case DEAD:
-		x = App->render->camera.x = 0;
-		if (App->scene->currmap == 1)
-			y = 395;
-		else
-			y = 196;
+		CurrentAnim = &Die;
+		death = true;
 		break;
 	default:
 		break;
