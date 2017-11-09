@@ -35,8 +35,6 @@ void j1Map::Draw()
 	if(map_loaded == false)
 		return;
 
-	// TODO 5: Prepare the loop to draw all tilesets + Blit
-
 	SDL_Rect* rect;
 	int x, y, h, w;
 	int layerss = 0;
@@ -61,10 +59,6 @@ void j1Map::Draw()
 			}
 		}
 	} 
-
-
-		// TODO 9: Complete the draw function
-
 }
 
 
@@ -106,9 +100,6 @@ bool j1Map::CleanUp()
 		item = item->next;
 	}
 	data.tilesets.clear();
-
-	// TODO 2: clean up all layer data
-	// Remove all layers
 
 	p2List_item<MapLayer*>* iter;
 	iter = data.layers.start;
@@ -204,9 +195,6 @@ bool j1Map::Load(const char* file_name)
 			LOG("spacing: %d margin: %d", s->spacing, s->margin);
 			item = item->next;
 		}
-
-		// TODO 4: Add info here about your loaded layers
-		// Adapt this vcode with your own variables
 		
 		p2List_item<MapLayer*>* item_layer = data.layers.start;
 		while(item_layer != NULL)
@@ -354,7 +342,6 @@ bool j1Map::LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set)
 	return ret;
 }
 
-// TODO 3: Create the definition for a function that loads a single layer
 bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 {
 	bool ret = true;
@@ -366,7 +353,7 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 	const char* aux = node.child("properties").child("property").attribute("name").as_string();
 	
 	if (strcmp(aux,"speed") == 0)
-		layer->speed = node.child("properties").child("property").attribute("value").as_float();
+		layer->speed = node.child("properties").child("property").attribute("value").as_float(1);
 	
 
 	for (pugi::xml_node iterator = node.child("data").child("tile"); iterator != nullptr; iterator = iterator.next_sibling())
